@@ -4,7 +4,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from interactions.ext.wait_for import wait_for, setup
 import os
-from data import song_list, max_score
+from data import song_list, max_score, song_url, chart_url
 
 Token = os.environ["DISCORD_BOT_TOKEN"]
 scope = [
@@ -79,6 +79,38 @@ async def ir(ctx, song_title: int, score: int, result):
     value=str(worksheet_list[0].acell(pic_cell2[str(ctx.user)]).value) + "位")
   embed.set_image(url=str(result.url))
   print(embed)
+  await ctx.send(
+    embeds=[interactions.Embed(**embed.to_dict())],  #embedの変換
+  )
+  
+
+@bot.command(
+  name="ir_songs",  #コマンド名
+  description="IRの楽曲ダウンロード先リンクを表示します",
+  options=[
+    interactions.Option(
+      type=interactions.OptionType.INTEGER,
+      name="song_title",
+      description="曲名を選んでください",
+      required=True,
+      choices = [interactions.Choice(name=song_list[i], value=i) for i in [1, 2, 3, 4, 5]]
+    )
+  ])
+async def ir_songs(ctx, song_title: int):
+  embed = discord.Embed(title="Song Infomation",
+                        description="",
+                        color=0xffff00)
+  
+  embed.add_field(name="Song", value=song_list[song_title])
+  embed.add_field(
+    name="Song URL",
+    value=song_url[song_title]
+  )
+  embed.add_field(
+    name="Chart URL",
+    value=chart_url[song_title]
+  )
+  
   await ctx.send(
     embeds=[interactions.Embed(**embed.to_dict())],  #embedの変換
   )
