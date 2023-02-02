@@ -5,6 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from interactions.ext.wait_for import wait_for, setup
 import os
 from data import song_list, max_score, song_url, chart_url
+from server import keep_alive
 
 Token = os.environ["DISCORD_BOT_TOKEN"]
 scope = [
@@ -131,6 +132,6 @@ pic_cell2 = {
 }
 player_list = {"ひたらぎ": 1, "egpt": 2, "strngi": 3, "きょん": 4, "STYU--": 5}
 
-
+keep_alive()
 
 bot.start()
