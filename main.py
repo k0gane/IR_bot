@@ -6,7 +6,7 @@ from interactions.ext.wait_for import wait_for, setup
 import os
 from data import song_list, max_score, song_url, chart_url
 from server import keep_alive
-
+import time
 Token = os.environ["DISCORD_BOT_TOKEN"]
 scope = [
   'https://spreadsheets.google.com/feeds',
@@ -133,5 +133,13 @@ pic_cell2 = {
 player_list = {"ひたらぎ": 1, "egpt": 2, "strngi": 3, "きょん": 4, "STYU--": 5}
 
 keep_alive()
-
+time = time.time()
 bot.start()
+while True:
+  now = time.time()
+  if now - time >= 1440:
+    keep_alive()
+    time = now
+    bot.close()
+    bot.start()
+    
