@@ -9,4 +9,3 @@ discord.py
 discord-py-slash-command
 interactions-wait-for
 flask
-threading
